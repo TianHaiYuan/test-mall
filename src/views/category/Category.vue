@@ -2,6 +2,7 @@
 <template>
   <div class="wrapper">
     <ul class="content">
+      <button @click="btnClick">按钮</button>
       <li>分类列表1</li>
       <li>分类列表2</li>
       <li>分类列表3</li>
@@ -111,7 +112,9 @@ import BScroll from "better-scroll";
 export default {
   name: "Category",
   data() {
-    return {};
+    return {
+scroll:null
+    }
   },
   //生命周期 - 创建完成（访问当前this实例）
   created() {},
@@ -120,14 +123,28 @@ export default {
        //0,1 都不侦测实时位置
        //2在手指滚动的过程中侦测，手指离开后的惯性不侦测
        //3 只要在滚动就侦测
-    const bscroll = new BScroll(document.querySelector(".wrapper"), {
+    this.scroll = new BScroll(document.querySelector(".wrapper"), {
       probeType: 3,
-      click
+      pullUpLoad:true
     });
-    bscroll.on("scroll", (posiyion) => {
-      console.log(posiyion);
+    this.scroll.on("scroll", (position) => {
+      //console.log(position);
+    });
+    this.scroll.on("pullingUp", () => {
+      console.log('上拉加载更多');
+      //发送网络请求，请求更多页数据
+      //等数据请求完成，并且将新数据展示出来后
+      setTimeout(() => {
+        this.scroll.finishPullUp()
+      }, 2000);
+      
     });
   },
+  methods:{
+    btnClick(){
+      console.log('btnClick')
+    }
+  }
 };
 </script>
 <style scoped>
