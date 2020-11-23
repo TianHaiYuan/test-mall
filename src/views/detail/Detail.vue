@@ -26,9 +26,10 @@
         ref="comment"
         :comment-info="commentInfo"
       ></detail-comment-info>
-      <goods-list ref="recommend" :goods="recommends" />
-      <detail-bottom-bar />
+      <goods-list ref="recommend" :goods="recommends" /> 
     </scroll>
+     <detail-bottom-bar @addCart="addToCart" />
+     <back-top @click.native="backTop" v-show="isShowBackTop"></back-top>
   </div>
 </template>
 
@@ -46,6 +47,7 @@ import Scroll from "components/common/scroll/Scroll";
 import GoodsList from "components/content/goods/GoodsList";
 
 import { debounce } from "common/utils";
+import {backTopMixin} from "common/mixin"
 
 import {
   getDetail,
@@ -69,6 +71,7 @@ export default {
     GoodsList,
     Scroll
   },
+  mixins:[backTopMixin],
   data() {
     return {
       iid: null,
@@ -120,7 +123,24 @@ export default {
           this.$refs.nav.currentIndex = this.currentIndex;
         }
       }
+      //是否显示回到顶部
+          this.isShowBackTop = -position.y > 1000;
     },
+    addToCart(){
+      console.log('-----------')
+      //1. 获取购物车需要展示的信息
+      const product={}
+        product.image=this.topImages[0];
+        product.title=this.goods.title;
+        product.desc=this.goods.desc;
+        product.price=this.goods.realPrice;
+        product.iid=this.iid
+
+        //2.将商品添加到购物车里
+        //this.$store.commit('addCart',product)
+        this.$store.dispatch('addCart',product)
+
+    }
   },
   //生命周期 - 创建完成（访问当前this实例）
   created() {
