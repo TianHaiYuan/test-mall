@@ -1,4 +1,4 @@
-# mall
+# 移动端商城mall（Vue2.x）
 
 ## Project setup
 ```
