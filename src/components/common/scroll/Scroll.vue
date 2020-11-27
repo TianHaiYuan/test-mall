@@ -1,6 +1,6 @@
 <!--  -->
 <template>
-  <div class="wrapper" ref="wrapper">
+  <div ref="wrapper">
     <div class="content">
       <slot></slot>
     </div>
@@ -63,4 +63,5 @@ export default {
 </script>
 <style scoped>
 /* @import url(); 引入css类 */
+
 </style>

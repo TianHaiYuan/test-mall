@@ -162,8 +162,7 @@ export default {
         //   this.show = false;
         //   this.message=''
         // }, 1000);
-        this.$toast.show()
-        console.log(this.$toast)
+        this.$toast.show('加入购物车成功')
       });
     },
   },
